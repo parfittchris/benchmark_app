@@ -49,17 +49,17 @@ class EntryForm extends Component {
     }
 
     handleSubmit(e) {
-        e.preventDefault()
+        e.preventDefault();
         const inputId = document.getElementById("inputId").value;
         this.setState({
-            id: inputId,
+            id: inputId
         });
     }
     
     render() {
         let percentile = <h2 className="noIdText">Enter user ID</h2>;
         if (this.state.id !== null) {
-          percentile = <Percentiles id={this.state.id} companies={this.state.companies} people={this.state.people}/>
+          percentile = <Percentiles id={this.state.id} companies={this.state.companies} people={this.state.people}/>;
         }
 
         return (

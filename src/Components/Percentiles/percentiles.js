@@ -65,7 +65,7 @@ class Percentiles extends Component {
 
         scores = scores.sort((a,b) =>  a - b);
         const idx = scores.indexOf(this.state.candidate.coding_score);
-        const percentile = Math.round((scores.slice(0, idx).length / (scores.length - 1)) * 100);
+        const percentile = Math.round((scores.slice(0, idx).length / (scores.length)) * 100);
         return percentile;
     }
 
@@ -98,26 +98,26 @@ class Percentiles extends Component {
                     <div className="userInfo">
                         <div className="userResult">
                             <p>User Title:</p>
-                            <p>{this.state.candidate.title}</p>
+                            <p id="userTitle">{this.state.candidate.title}</p>
                         </div>
                         <div className="userResult">
                             <p>User Coding Score:</p>
-                            <p>{this.state.candidate.coding_score}</p>
+                            <p id="userCoding">{this.state.candidate.coding_score}</p>
                         </div>
                         <div className="userResult">
                             <p>User Comm. Score:</p>
-                            <p>{this.state.candidate.communication_score}</p>
+                            <p id="userComm">{this.state.candidate.communication_score}</p>
                         </div>
                     </div>
                     <h2>Results</h2>
                     <div className="percentileInfo">
                         <div className="results-1">
                             <p>Coding:</p>
-                            <p>{this.getCoding()} Percentile</p>
+                            <p id="results-1-score">{this.getCoding()} Percentile</p>
                         </div>
                         <div className="results-2">
                             <p>Communication:</p>
-                            <p>{this.getCommunication()} Percentile</p>
+                            <p id="results-2-score">{this.getCommunication()} Percentile</p>
                         </div>
                     </div>
                 </div>
