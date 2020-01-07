@@ -1,68 +1,77 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Benchmark App - See how you stack up against similar engineers at yours and other companies!
 
-## Available Scripts
 
-In the project directory, you can run:
+## Background and Overview
 
-### `yarn start`
+This app allows a user to input the id of any candidate and immediately see that candidate's job title, coding, and communicative scores, as well as where their scores fall in the percentile rank when compared with other engineers at the same level at similar companies to theirs. The data is stored in csv files located internally in an assets folder. The app was built using the Create-React-App and also comes with automated testing specs using jest and enzyme.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Functionality
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+In the Benchmark App, users will be able to:
+  * Input any user id that is contained in the csv file of all engineers
+  * See the inputed engineer's scores and job title as well as his or her percentile rank among engineers of the same title at similar companies
+  * Use automated test specifications to ensure the app is performing as intended
 
-### `yarn test`
+## Features
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### User ID Input
+ ![wire frame](https://github.com/parfittchris/benchmark_app/tree/master/App%20Assets/screenshot.png)
+ 
+ Users input an engineer's id to get access to their scores, title, and percentile rank. The following is the function to  determine the percentile of an engineer's coding score.
+ 
+ ```
+ getCoding() {
+        let scores = [];
 
-### `yarn build`
+        // Only include scores of engineers with same title and at companies included in state
+        this.props.people.forEach(person => {
+            if (this.state.companies.includes(person.company_id) && person.title === this.state.candidate.title) {
+                scores.push(person.coding_score);
+            }
+        });
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+        //Sort scores before getting percentile
+        scores = scores.sort((a,b) =>  a - b);
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+        // Find idx of current engineer's score
+        const idx = scores.indexOf(this.state.candidate.coding_score);
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+        // Percentile is number of scores below current user's divided by total number of scores
+        const percentile = Math.round((scores.slice(0, idx).length / (scores.length)) * 100);
+        return percentile;
+    }
+ ```
+ 
+ ### Automated Tests
+ 
+ The app includes automated testing specs using Jest and Enzyme to ensure the components are behaving and are rendered properly. The following is a test to ensure that the component displaying an engineer's scores and ranking is only rendered when an id is inputed.
+ 
+ ```
+ it('Should not render percentile component when no id is entered', () => {
+        
+        // Confirm default text is rendered and percentile component is not
+        const defaultText = wrapper.find('.percentileApp').text();
+        expect(defaultText).toEqual('Enter user ID');
+        expect(wrapper.find('Percentiles').length).toEqual(0);
+    });
+    
+ it('Should render percentile component when id is entered', () => {
+        // Check if percentile component is rendered
+        let defaultText = wrapper.find('.percentileApp').text();
+        expect(defaultText).toEqual('Enter user ID');
+        expect(wrapper.find('Percentiles').length).toEqual(0);
 
-### `yarn eject`
+        // Setting id in state auto loads percentile component
+        wrapper.setState({ id:897 });
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+        // Confirm percentile component is loaded and default text is no longer present
+        defaultText = wrapper.find('.percentileApp').text();
+        expect(defaultText).not.toEqual('Enter user ID');
+        expect(wrapper.find('Percentiles').length).toEqual(1);
+    });
+ ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Future Updates
+* Replace CSV file reading functionality with backend database that will serve up data via GET Requests
+* Add an 'Add User' form to store new users into database and continually update percentile rankings
+* Add graphic to visually see percentile rankings
