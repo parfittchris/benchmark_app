@@ -18,16 +18,20 @@ class Percentiles extends Component {
 
 
     componentDidMount() {
+        // On mount, set component state to engineer whose id is passed in
         this.findPerson();
     }
 
     componentDidUpdate(prevProps) {
+        // Allows a new id to be entered without refreshing page
         if (prevProps.id !== this.props.id) {
             this.findPerson();
         }
     }
 
     findPerson() {
+        // Set state to candidate or null. Null is important for rendering ids that are not in the csv file
+        // Call findCompanies only after candidate is set in state
         const candidate = this.props.people.filter(person => person.candidate_id === this.props.id)[0];
         if (candidate !== undefined) {
             this.setState({
@@ -42,6 +46,8 @@ class Percentiles extends Component {
 
     findCompanies() {
         const currentCompany = this.props.companies.filter(company => company.company_id === this.state.candidate.company_id)[0];
+
+        // Only include companies in state that are similar based on fractal_index
         const companies = this.props.companies.filter(company => {
             return this.getSimilarCompanies(currentCompany, company) === true;
         }).map(company => {return company = company.company_id});
@@ -57,19 +63,26 @@ class Percentiles extends Component {
     getCoding() {
         let scores = [];
 
+        // Only include scores of engineers with same title and at companies included in state
         this.props.people.forEach(person => {
             if (this.state.companies.includes(person.company_id) && person.title === this.state.candidate.title) {
                 scores.push(person.coding_score);
             }
         });
 
+        //Sort scores before getting percentile
         scores = scores.sort((a,b) =>  a - b);
+
+        // Find idx of current engineer's score
         const idx = scores.indexOf(this.state.candidate.coding_score);
+
+        // Percentile is number of scores below current user's divided by total number of scores
         const percentile = Math.round((scores.slice(0, idx).length / (scores.length)) * 100);
         return percentile;
     }
 
     getCommunciation() {
+        // Communication score found same way as coding score
         let scores = []
 
         this.props.people.forEach(person => {
@@ -85,6 +98,7 @@ class Percentiles extends Component {
     }
     
     render() {
+        // Only render percentile score if user id is in csv file
         if (!this.state.candidate || this.state.candidate === undefined) {
             return (
                 <div className="results">
@@ -121,7 +135,7 @@ class Percentiles extends Component {
                         </div>
                     </div>
                 </div>
-            )
+            );
         }
     }
 }

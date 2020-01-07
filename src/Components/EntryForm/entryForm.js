@@ -18,6 +18,7 @@ class EntryForm extends Component {
     }
     
     componentDidMount() {
+        // Read in csv files from assets folder when app is mounted
         const scorePath = require("../../assets/score-records.csv");
         const companiesPath = require("../../assets/companies.csv");
 
@@ -57,6 +58,7 @@ class EntryForm extends Component {
     }
     
     render() {
+        // Only render percentile component if state has an id passed in
         let percentile = <h2 className="noIdText">Enter user ID</h2>;
         if (this.state.id !== null) {
           percentile = <Percentiles id={this.state.id} companies={this.state.companies} people={this.state.people}/>;
@@ -74,7 +76,7 @@ class EntryForm extends Component {
                     {percentile}
                 </div>
             </div>
-        )
+        );
     }
 }
 

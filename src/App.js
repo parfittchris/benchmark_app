@@ -1,5 +1,5 @@
 import React from 'react';
-import EntryForm from './Components/EntryForm/entryForm.js'
+import EntryForm from './Components/EntryForm/entryForm.js';
 
 function App() {
   return (
