@@ -15,7 +15,7 @@ In the Benchmark App, users will be able to:
 ## Features
 
 ### User ID Input
- ![wire frame](https://github.com/parfittchris/benchmark_app/tree/master/App%20Assets/screenshot.png)
+ ![wire frame](https://github.com/parfittchris/benchmark_app/blob/master/App%20Assets/screenshot.png)
  
  Users input an engineer's id to get access to their scores, title, and percentile rank. The following is the function to  determine the percentile of an engineer's coding score.
  
