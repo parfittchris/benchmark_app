@@ -57,22 +57,22 @@ class EntryForm extends Component {
     }
     
     render() {
-        let percentile = null;
+        let percentile = <h2 className="noIdText">Enter user ID</h2>;
         if (this.state.id !== null) {
           percentile = <Percentiles id={this.state.id} companies={this.state.companies} people={this.state.people}/>
         }
 
         return (
-            <div>
-                <p>Id:{this.state.id}</p>
-                <form onSubmit={this.handleSubmit.bind(this)}>
-                    <label>
-                        <p>Id:</p>
+            <div className="page">
+                    <h1 className="appTitle">Candidate Percentile Finder</h1>
+                    <form onSubmit={this.handleSubmit.bind(this)} className="pageForm">
+                        <p>Enter user id: </p>
                         <input type="number" id="inputId"></input>
-                    </label>
-                    <button type="submit" id="inputId">Get Percentile</button>
+                        <button type="submit" id="inputId">Get Percentile</button>
+                    </form>
+                <div className="percentileApp">
                     {percentile}
-                </form>
+                </div>
             </div>
         )
     }

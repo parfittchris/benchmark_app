@@ -1,0 +1,49 @@
+h2 {
+    margin: 20px auto;
+}
+
+.noResultsTitle {
+    text-align: center;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-around;
+    padding: 0 5%;
+    font-size: 26px;
+}
+
+.percentileInfo {
+    display: flex;
+}
+
+.userResult {
+    width: 33%;
+}
+
+.userResult > p {
+    height: 50%;
+}
+
+.userInfo {
+    padding: 5px;
+    border-radius: 2px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.userInfo > {
+    display: flex;
+}
+
+.percentileInfo {
+    display:flex;
+    justify-content: space-around;
+    text-align: center;
+}

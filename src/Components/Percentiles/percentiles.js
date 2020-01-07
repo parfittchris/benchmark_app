@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './percentiles.css';
 
 class Percentiles extends Component {
     constructor(props) {
@@ -50,11 +51,11 @@ class Percentiles extends Component {
     }
    
     getSimilarCompanies(company1, company2) {
-        return Math.abs(company1['fractal_index'] - company2['fractal_index']) < 0.15
+        return Math.abs(company1['fractal_index'] - company2['fractal_index']) < 0.15;
     }
 
     getCoding() {
-        let scores = []
+        let scores = [];
 
         this.props.people.forEach(person => {
             if (this.state.companies.includes(person.company_id) && person.title === this.state.candidate.title) {
@@ -64,7 +65,7 @@ class Percentiles extends Component {
 
         scores = scores.sort((a,b) =>  a - b);
         const idx = scores.indexOf(this.state.candidate.coding_score);
-        const percentile = Math.round((scores.slice(0, idx).length / scores.length) * 100);
+        const percentile = Math.round((scores.slice(0, idx).length / (scores.length - 1)) * 100);
         return percentile;
     }
 
@@ -84,18 +85,41 @@ class Percentiles extends Component {
     }
     
     render() {
-        console.log(this.state.candidate)
         if (!this.state.candidate || this.state.candidate === undefined) {
             return (
-                <div>
-                    <h1>This id is not valid</h1>
+                <div className="results">
+                    <h1 className="noResultsTitle">This id is not valid</h1>
                 </div>
             )
         } else {
             return (
-                <div>
-                    <p>Coding: {this.getCoding()}th Percentile</p>
-                    <p>Communication: {this.getCommunication()}th Percentile</p>
+                <div className="results">
+                    <h2>Engineer Info</h2>
+                    <div className="userInfo">
+                        <div className="userResult">
+                            <p>User Title:</p>
+                            <p>{this.state.candidate.title}</p>
+                        </div>
+                        <div className="userResult">
+                            <p>User Coding Score:</p>
+                            <p>{this.state.candidate.coding_score}</p>
+                        </div>
+                        <div className="userResult">
+                            <p>User Comm. Score:</p>
+                            <p>{this.state.candidate.communication_score}</p>
+                        </div>
+                    </div>
+                    <h2>Results</h2>
+                    <div className="percentileInfo">
+                        <div className="results-1">
+                            <p>Coding:</p>
+                            <p>{this.getCoding()} Percentile</p>
+                        </div>
+                        <div className="results-2">
+                            <p>Communication:</p>
+                            <p>{this.getCommunication()} Percentile</p>
+                        </div>
+                    </div>
                 </div>
             )
         }

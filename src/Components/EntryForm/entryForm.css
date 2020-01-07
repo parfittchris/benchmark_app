@@ -5,4 +5,43 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
  
 input[type="number"] {
     -moz-appearance: textfield;
+    
+}
+
+#inputId {
+    margin-left: 10px;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.appTitle {
+    margin: 10px auto;
+}
+
+.pageForm {
+    margin: 15px auto;
+    display: flex;
+    align-items: center;
+}
+
+.pageForm > p {
+    margin: 0;
+}
+
+.noIdText {
+    margin: 0 auto;
+}
+
+.percentileApp {
+    border: 3px solid green;
+    height: 65vh;
+    width: 40vw;
+    margin: 5px auto;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
 }
